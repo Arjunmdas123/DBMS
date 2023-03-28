@@ -1,0 +1,485 @@
+create database student;
+Query OK, 1 row affected (0.00 sec)
+
+mysql> delete database student;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'database student' at line 1
+mysql> drop database student;
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> create database college;
+Query OK, 1 row affected (0.00 sec)
+
+mysql> use college;
+Database changed
+mysql> create table department(dept_id int primary key,dname varchar(30),hod varchar(20));
+Query OK, 0 rows affected (0.21 sec)
+
+mysql> desc department;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| dept_id | int(11)     | NO   | PRI | NULL    |       |
+| dname   | varchar(30) | YES  |     | NULL    |       |
+| hod     | varchar(20) | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> create table dept_ph(dept_id int,phno numeric(10),primary key(dept_id,phno));
+Query OK, 0 rows affected (0.24 sec)
+
+mysql> desc dept_ph;;
++---------+---------------+------+-----+---------+-------+
+| Field   | Type          | Null | Key | Default | Extra |
++---------+---------------+------+-----+---------+-------+
+| dept_id | int(11)       | NO   | PRI | NULL    |       |
+| phno    | decimal(10,0) | NO   | PRI | NULL    |       |
++---------+---------------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+ERROR: 
+No query specified
+
+mysql> create table professor(empid int primary key,pname varchar(20),sex varchar(7),strt_yr int,dept_id int,foregin key(dept_id)references department(dept_id)on delete cascade);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'key(dept_id)references department(dept_id)on delete cascade)' at line 1
+mysql> create table professor(empid int primary key,pname varchar(20),sex varchar(7),strt_yr int,dept_id int,foreginkey(dept_id)references department(dept_id)on delete cascade);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(dept_id)references department(dept_id)on delete cascade)' at line 1
+mysql> create table professor(empid int primary key,pname varchar(20),sex varchar(7),strt_yr int,dept_id int,foreginkey(dept_id)references department(dept_id)on delete cascade);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(dept_id)references department(dept_id)on delete cascade)' at line 1
+mysql> create table professor(empid int primary key,pname varchar(20),sex varchar(7),strt_yr int,dept_id int,foreign key(dept_id)references department(dept_id)on delete cascade);
+Query OK, 0 rows affected (0.24 sec)
+
+mysql> desc professor;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| empid   | int(11)     | NO   | PRI | NULL    |       |
+| pname   | varchar(20) | YES  |     | NULL    |       |
+| sex     | varchar(7)  | YES  |     | NULL    |       |
+| strt_yr | int(11)     | YES  |     | NULL    |       |
+| dept_id | int(11)     | YES  | MUL | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> 3●create table prof_ph(empid int,phno numeric(10),primary key(empid,phno));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '3●create table prof_ph(empid int,phno numeric(10),primary key(empid,phno))' at line 1
+mysql> create table prof_ph(empid int,phno numeric(10),primary key(empid,phno)); 
+Query OK, 0 rows affected (0.20 sec)
+
+mysql> desc prof_ph;
++-------+---------------+------+-----+---------+-------+
+| Field | Type          | Null | Key | Default | Extra |
++-------+---------------+------+-----+---------+-------+
+| empid | int(11)       | NO   | PRI | NULL    |       |
+| phno  | decimal(10,0) | NO   | PRI | NULL    |       |
++-------+---------------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+mysql> create table student(rollno int primary key,sname varchar(20),degree varchar(20),year int,sex varchar(7),dept_id int,empid int,foreign key(dept_id)references department(dept_id)on delete cascade,foreign key(empid)references professor(empid)on delete cascade);
+Query OK, 0 rows affected (0.24 sec)
+
+mysql> desc student;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| rollno  | int(11)     | NO   | PRI | NULL    |       |
+| sname   | varchar(20) | YES  |     | NULL    |       |
+| degree  | varchar(20) | YES  |     | NULL    |       |
+| year    | int(11)     | YES  |     | NULL    |       |
+| sex     | varchar(7)  | YES  |     | NULL    |       |
+| dept_id | int(11)     | YES  | MUL | NULL    |       |
+| empid   | int(11)     | YES  | MUL | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+7 rows in set (0.00 sec)
+
+mysql> create  table  course(cid  intprimary  key,cname  varchar(20),min_cred  int,dept_id int,empid    int,foreign    key(dept_id)references    department(dept_id)on    delete cascade,foreign key(empid)references professor(empid)on delete cascade);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'intprimary  key,cname  varchar(20),min_cred  int,dept_id int,empid    int,foreig' at line 1
+mysql> create  table  course(cid  intprimary  key,cname  varchar(20),min_cred  int,dept_id int,empid    int,foreign    key(dept_id)references    department(dept_id)on    delete cascade,foreign key(empid)references professor(empid)on delete cascade);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'intprimary  key,cname  varchar(20),min_cred  int,dept_id int,empid    int,foreig' at line 1
+mysql> create  table  course(cid  int primary  key,cname  varchar(20),min_cred
+int,dept_id int,empid    int,foreign    key(dept_id)references    department(dept_id)on    delete cascade,foreign key(empid)references professor(empid)on delete
+ cascade);
+Query OK, 0 rows affected (0.24 sec)
+
+mysql> desc course;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| cid      | int(11)     | NO   | PRI | NULL    |       |
+| cname    | varchar(20) | YES  |     | NULL    |       |
+| min_cred | int(11)     | YES  |     | NULL    |       |
+| dept_id  | int(11)     | YES  | MUL | NULL    |       |
+| empid    | int(11)     | YES  | MUL | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> create table enrollment(rollno int,cid int,primary key(rollno,cid));
+Query OK, 0 rows affected (0.20 sec)
+
+mysql> desc enrollment;
++--------+---------+------+-----+---------+-------+
+| Field  | Type    | Null | Key | Default | Extra |
++--------+---------+------+-----+---------+-------+
+| rollno | int(11) | NO   | PRI | NULL    |       |
+| cid    | int(11) | NO   | PRI | NULL    |       |
++--------+---------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+mysql> insert into department values (121,'MCA','Prof. Reena'), (122,'CSE','Prof. Madhav'), (123,'MBA','Prof. John');
+Query OK, 3 rows affected (0.02 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> select * from department;
++---------+-------+--------------+
+| dept_id | dname | hod          |
++---------+-------+--------------+
+|     121 | MCA   | Prof. Reena  |
+|     122 | CSE   | Prof. Madhav |
+|     123 | MBA   | Prof. John   |
++---------+-------+--------------+
+3 rows in set (0.00 sec)
+
+mysql> insert into professor values(1001,'Alice','Female',1998,121),(1002,'Madhu','Male',2002,121),(1003,'Nidhin','Male',1992,122),(1004,'Sheela','Female',2001,123),(1005,'Viji','Female',1990,123),(1006,'Arun','Male',1990,122);
+Query OK, 6 rows affected (0.03 sec)
+Records: 6  Duplicates: 0  Warnings: 0
+
+mysql> select * from professor;
++-------+--------+--------+---------+---------+
+| empid | pname  | sex    | strt_yr | dept_id |
++-------+--------+--------+---------+---------+
+|  1001 | Alice  | Female |    1998 |     121 |
+|  1002 | Madhu  | Male   |    2002 |     121 |
+|  1003 | Nidhin | Male   |    1992 |     122 |
+|  1004 | Sheela | Female |    2001 |     123 |
+|  1005 | Viji   | Female |    1990 |     123 |
+|  1006 | Arun   | Male   |    1990 |     122 |
++-------+--------+--------+---------+---------+
+6 rows in set (0.00 sec)
+
+mysql> insert into student values(1,'Anju','BCA',2019,'Female',121,1001),(2,'Botto','BscCS',2018,'Male',122,1003),(3,'Arjun','BscPh',2019,'Male',121,1002),(4,'Jinu','BBA',2019,'Male',123,1004);
+Query OK, 4 rows affected (0.04 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+mysql> select * from student;
++--------+-------+--------+------+--------+---------+-------+
+| rollno | sname | degree | year | sex    | dept_id | empid |
++--------+-------+--------+------+--------+---------+-------+
+|      1 | Anju  | BCA    | 2019 | Female |     121 |  1001 |
+|      2 | Botto | BscCS  | 2018 | Male   |     122 |  1003 |
+|      3 | Arjun | BscPh  | 2019 | Male   |     121 |  1002 |
+|      4 | Jinu  | BBA    | 2019 | Male   |     123 |  1004 |
++--------+-------+--------+------+--------+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> insert into student values(1,'Anju','BCA',2019,'Female',121,1001),(2,'Botto','BscCS',2018,'Male',122,1003),(3,'Arjun','BscPh',2019,'Male',121,1002),(4,'Jinu','BBA',2019,'Male',123,1004);
+ERROR 1062 (23000): Duplicate entry '1' for key 'PRIMARY'
+mysql> insert into student values(1,'Anju','BCA',2019,'Female',121,1001),(2,'Botto','BscCS',2018,'Male',122,1003),(3,'Arjun','BscPh',2019,'Male',121,1002),(4,'Jinu','BBA',2019,'Male',123,1004);
+ERROR 1062 (23000): Duplicate entry '1' for key 'PRIMARY'
+mysql> insert into student values(1,'Anju','BCA',2019,'Female',121,1001),(2,'Botto','BscCS',2018,'Male',122,1003),(3,'Arjun','BscPh',2019,'Male',121,1002),(4,'Jinu','BBA',2019,'Male',123,1004);
+ERROR 1062 (23000): Duplicate entry '1' for key 'PRIMARY'
+mysql> insert into student values(5,'Anju','BCA',2019,'Female',121,1001),(2,'Botto
+inu','BBA',2019,'Male',123,1004);
+ERROR 1062 (23000): Duplicate entry '2' for key 'PRIMARY'
+mysql> insert into student values(5,'Anju','BCA',2019,'Female',121,1001),(6,'Botto
+inu','BBA',2019,'Male',123,1004);
+ERROR 1062 (23000): Duplicate entry '3' for key 'PRIMARY'
+mysql> insert into student values(5,'Anju','BCA',2019,'Female',121,1001),(6,'Botto','BscCS',2018,'Male',122,1003),(7,'Arjun','BscPh',2019,'Male',121,1002),(8,'Jinu','BBA',2019,'Male',123,1004);
+Query OK, 4 rows affected (0.02 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+mysql> select * from student;
++--------+-------+--------+------+--------+---------+-------+
+| rollno | sname | degree | year | sex    | dept_id | empid |
++--------+-------+--------+------+--------+---------+-------+
+|      1 | Anju  | BCA    | 2019 | Female |     121 |  1001 |
+|      2 | Botto | BscCS  | 2018 | Male   |     122 |  1003 |
+|      3 | Arjun | BscPh  | 2019 | Male   |     121 |  1002 |
+|      4 | Jinu  | BBA    | 2019 | Male   |     123 |  1004 |
+|      5 | Anju  | BCA    | 2019 | Female |     121 |  1001 |
+|      6 | Botto | BscCS  | 2018 | Male   |     122 |  1003 |
+|      7 | Arjun | BscPh  | 2019 | Male   |     121 |  1002 |
+|      8 | Jinu  | BBA    | 2019 | Male   |     123 |  1004 |
++--------+-------+--------+------+--------+---------+-------+
+8 rows in set (0.00 sec)
+
+mysql> insert into prof_ph values (1001,9999999991), (1002,9999999992), (1003,9999999993), (1004,9999999994),(1005,9999999995), (1006,9999999996);
+Query OK, 6 rows affected (0.05 sec)
+Records: 6  Duplicates: 0  Warnings: 0
+
+mysql> select * from prof_ph;
++-------+------------+
+| empid | phno       |
++-------+------------+
+|  1001 | 9999999991 |
+|  1002 | 9999999992 |
+|  1003 | 9999999993 |
+|  1004 | 9999999994 |
+|  1005 | 9999999995 |
+|  1006 | 9999999996 |
++-------+------------+
+6 rows in set (0.00 sec)
+
+mysql> insert into dept_ph values (121,9999999980), (122,9999999981), (123,9999999982);
+Query OK, 3 rows affected (0.02 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> select * from dep_ph;
+ERROR 1146 (42S02): Table 'college.dep_ph' doesn't exist
+mysql> select * from dep_ph;
+ERROR 1146 (42S02): Table 'college.dep_ph' doesn't exist
+mysql> show tables;
++-------------------+
+| Tables_in_college |
++-------------------+
+| course            |
+| department        |
+| dept_ph           |
+| enrollment        |
+| prof_ph           |
+| professor         |
+| student           |
++-------------------+
+7 rows in set (0.00 sec)
+
+mysql> select * from dept_ph;
++---------+------------+
+| dept_id | phno       |
++---------+------------+
+|     121 | 9999999980 |
+|     122 | 9999999981 |
+|     123 | 9999999982 |
++---------+------------+
+3 rows in set (0.00 sec)
+
+mysql> insert into course value(201,'Btech CSE',8,122,1003),(202,'Mtech CSE',10,122,1003),(203,'MCA',9,121,1001),(204,'MBA',9,123,1005);
+Query OK, 4 rows affected (0.03 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+mysql> select * from course;
++-----+-----------+----------+---------+-------+
+| cid | cname     | min_cred | dept_id | empid |
++-----+-----------+----------+---------+-------+
+| 201 | Btech CSE |        8 |     122 |  1003 |
+| 202 | Mtech CSE |       10 |     122 |  1003 |
+| 203 | MCA       |        9 |     121 |  1001 |
+| 204 | MBA       |        9 |     123 |  1005 |
++-----+-----------+----------+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> insert into enrollment values (1,203), (2,201), (3,203), (4,204);
+Query OK, 4 rows affected (0.03 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+mysql> select * from enrollment;
++--------+-----+
+| rollno | cid |
++--------+-----+
+|      1 | 203 |
+|      2 | 201 |
+|      3 | 203 |
+|      4 | 204 |
++--------+-----+
+4 rows in set (0.00 sec)
+
+mysql> delete from professor where strt_yr=1992;
+Query OK, 1 row affected (0.06 sec)
+
+mysql> select * from professor;
++-------+--------+--------+---------+---------+
+| empid | pname  | sex    | strt_yr | dept_id |
++-------+--------+--------+---------+---------+
+|  1001 | Alice  | Female |    1998 |     121 |
+|  1002 | Madhu  | Male   |    2002 |     121 |
+|  1004 | Sheela | Female |    2001 |     123 |
+|  1005 | Viji   | Female |    1990 |     123 |
+|  1006 | Arun   | Male   |    1990 |     122 |
++-------+--------+--------+---------+---------+
+5 rows in set (0.00 sec)
+
+mysql> update  prof_ph  set  phno=04764567878  where  empid  in(select  empid  from professor    where    dept_id=(select dept_id    from    department    where dname='MCA'));
+Query OK, 2 rows affected (0.03 sec)
+Rows matched: 2  Changed: 2  Warnings: 0
+
+mysql> select * from prof_ph;
++-------+------------+
+| empid | phno       |
++-------+------------+
+|  1001 | 4764567878 |
+|  1002 | 4764567878 |
+|  1003 | 9999999993 |
+|  1004 | 9999999994 |
+|  1005 | 9999999995 |
+|  1006 | 9999999996 |
++-------+------------+
+6 rows in set (0.00 sec)
+
+mysql> select * from professor where strt_yr>1990 order by pname;
++-------+--------+--------+---------+---------+
+| empid | pname  | sex    | strt_yr | dept_id |
++-------+--------+--------+---------+---------+
+|  1001 | Alice  | Female |    1998 |     121 |
+|  1002 | Madhu  | Male   |    2002 |     121 |
+|  1004 | Sheela | Female |    2001 |     123 |
++-------+--------+--------+---------+---------+
+3 rows in set (0.00 sec)
+
+mysql> select * from professor where strt_yr between 1990 and 2000;
++-------+-------+--------+---------+---------+
+| empid | pname | sex    | strt_yr | dept_id |
++-------+-------+--------+---------+---------+
+|  1001 | Alice | Female |    1998 |     121 |
+|  1005 | Viji  | Female |    1990 |     123 |
+|  1006 | Arun  | Male   |    1990 |     122 |
++-------+-------+--------+---------+---------+
+3 rows in set (0.00 sec)
+
+mysql> select empid,pname from professor where sex='Female' and dept_id=(select dept_id from department where dname='MCA');
++-------+-------+
+| empid | pname |
++-------+-------+
+|  1001 | Alice |
++-------+-------+
+1 row in set (0.00 sec)
+
+mysql> select    e.empid,e.pname,p.phno    from    professor    e,prof_ph    p    where e.empid=p.empid  and  e.strt_yr>2000  and  e.dept_id=(select  dept_idfrom department where dname='MCA');
+ERROR 1054 (42S22): Unknown column 'dept_idfrom' in 'field list'
+mysql> desc department;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| dept_id | int(11)     | NO   | PRI | NULL    |       |
+| dname   | varchar(30) | YES  |     | NULL    |       |
+| hod     | varchar(20) | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> select    e.empid,e.pname,p.phno    from    professor    e,prof_ph    p    where e.empid=p.empid  and  e.strt_yr>2000  and  e.dept_id=(select  dept_id from department where dname='MCA');
++-------+-------+------------+
+| empid | pname | phno       |
++-------+-------+------------+
+|  1002 | Madhu | 4764567878 |
++-------+-------+------------+
+1 row in set (0.01 sec)
+
+mysql> select  *  from  student  where  empid=(select  empid  from  professor  where pname='Alice');
++--------+-------+--------+------+--------+---------+-------+
+| rollno | sname | degree | year | sex    | dept_id | empid |
++--------+-------+--------+------+--------+---------+-------+
+|      1 | Anju  | BCA    | 2019 | Female |     121 |  1001 |
+|      5 | Anju  | BCA    | 2019 | Female |     121 |  1001 |
++--------+-------+--------+------+--------+---------+-------+
+2 rows in set (0.00 sec)
+
+mysql> select  s.rollno,s.sname  from  student  s,professor  p  where  s.empid=p.empid and s.sex=p.sex;
++--------+-------+
+| rollno | sname |
++--------+-------+
+|      1 | Anju  |
+|      5 | Anju  |
+|      3 | Arjun |
+|      7 | Arjun |
++--------+-------+
+4 rows in set (0.00 sec)
+
+mysql> select empid,pname from professor where strt_yr=(select min(strt_yr) from professor);
++-------+-------+
+| empid | pname |
++-------+-------+
+|  1005 | Viji  |
+|  1006 | Arun  |
++-------+-------+
+2 rows in set (0.00 sec)
+
+mysql> select  empid,pname  from  professor  where  empid  in(select  empid  from student where sex='Female');
++-------+-------+
+| empid | pname |
++-------+-------+
+|  1001 | Alice |
++-------+-------+
+1 row in set (0.00 sec)
+
+mysql> select  rollno  from  enrollment  where  cid  in(select  cid  from  course  where cname like '%btech%' or cname='MCA');
++--------+
+| rollno |
++--------+
+|      1 |
+|      3 |
++--------+
+2 rows in set (0.01 sec)
+
+mysql> select    count(*)    from    student    where    dept_id=(select    dept_idfrom department where dname='MCA');
+ERROR 1054 (42S22): Unknown column 'dept_idfrom' in 'field list'
+mysql> select    count(*)    from    student    where    dept_id=(select    dept_id from department where dname='MCA');
++----------+
+| count(*) |
++----------+
+|        4 |
++----------+
+1 row in set (0.00 sec)
+
+mysql> select c.cname,p.pname from course c,professor p where c.empid=p.empid
+    -> ;
++-------+-------+
+| cname | pname |
++-------+-------+
+| MCA   | Alice |
+| MBA   | Viji  |
++-------+-------+
+2 rows in set (0.00 sec)
+
+mysql> select c.cname,p.pname from course c,professor p where c.empid=p.empid;
++-------+-------+
+| cname | pname |
++-------+-------+
+| MCA   | Alice |
+| MBA   | Viji  |
++-------+-------+
+2 rows in set (0.00 sec)
+
+mysql> select count(*),cid from enrollment group by cid;
++----------+-----+
+| count(*) | cid |
++----------+-----+
+|        1 | 201 |
+|        2 | 203 |
+|        1 | 204 |
++----------+-----+
+3 rows in set (0.00 sec)
+
+mysql> create  view  employee  as  select  e.empid,e.pname,p.phno  from  professor e,prof_ph as  p  where  e.dept_id=(select  dept_id  from  department  where dname='CSE') and e.empid=p.empid and e.strt_yr>=1990;
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> select * from employee;
++-------+-------+------------+
+| empid | pname | phno       |
++-------+-------+------------+
+|  1006 | Arun  | 9999999996 |
++-------+-------+------------+
+1 row in set (0.00 sec)
+
+mysql> select * from employee where pname like 'M%' or pname like '%n';
++-------+-------+------------+
+| empid | pname | phno       |
++-------+-------+------------+
+|  1006 | Arun  | 9999999996 |
++-------+-------+------------+
+1 row in set (0.00 sec)
+
+mysql> select d.dname,c.* from department as d join(select count(cid),dept_id from course group by dept_id) c using (dept_id);
++-------+------------+---------+
+| dname | count(cid) | dept_id |
++-------+------------+---------+
+| MCA   |          1 |     121 |
+| MBA   |          1 |     123 |
++-------+------------+---------+
+2 rows in set (0.00 sec)
+
+mysql> select s.rollno,s.sname,p.pname,c.cname from student s,professor p,course c  where  s.empid=p.empid  and  c.cid  in(select  cid  from  enrollment  where s.rollno=rollno)   and   s.dept_id=(select   dept_id   from   department   where dname='MCA');
++--------+-------+-------+-------+
+| rollno | sname | pname | cname |
++--------+-------+-------+-------+
+|      1 | Anju  | Alice | MCA   |
+|      3 | Arjun | Madhu | MCA   |
++--------+-------+-------+-------+
+2 rows in set (0.00 sec)
+
+mysql> 
