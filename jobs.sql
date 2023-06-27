@@ -125,3 +125,151 @@ mysql> desc dependents;
 5 rows in set (0.00 sec)
 
 mysql> 
+use jobs;
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+mysql> show table;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql> show tables;
++----------------+
+| Tables_in_jobs |
++----------------+
+| countries      |
+| departments    |
+| dependents     |
+| employee       |
+| jobs           |
+| locations      |
+| manager        |
+| regions        |
++----------------+
+8 rows in set (0.00 sec)
+
+mysql> insert into regions values(1001,'Europe'),(1002,'America'),(1003,'Eurasia'),(1004,'Africa'),(1005,'Asia'),(1006,'Antarctica'),(1007,'Australia');
+Query OK, 7 rows affected (0.04 sec)
+Records: 7  Duplicates: 0  Warnings: 0
+
+mysql> select*from regions;
++-----------+-------------+
+| region_id | region_name |
++-----------+-------------+
+|        10 | Asia        |
+|      1001 | Europe      |
+|      1002 | America     |
+|      1003 | Eurasia     |
+|      1004 | Africa      |
+|      1005 | Asia        |
+|      1006 | Antarctica  |
+|      1007 | Australia   |
++-----------+-------------+
+8 rows in set (0.00 sec)
+
+mysql> delete from regions where region_id=10;
+Query OK, 1 row affected (0.05 sec)
+
+mysql> select*from regions;
++-----------+-------------+
+| region_id | region_name |
++-----------+-------------+
+|      1001 | Europe      |
+|      1002 | America     |
+|      1003 | Eurasia     |
+|      1004 | Africa      |
+|      1005 | Asia        |
+|      1006 | Antarctica  |
+|      1007 | Australia   |
++-----------+-------------+
+7 rows in set (0.01 sec)
+
+mysql> insert into countries values(2001,'jermany',1001),(2002,'Mexico',1002),(2003,'Russia',1003),(2004,'Nigeria',1004),(2005,'India',1005),(2006,'France',1006),(2007,'New zealand',1007);
+Query OK, 7 rows affected (0.03 sec)
+Records: 7  Duplicates: 0  Warnings: 0
+
+mysql> select*from countries;
++------------+--------------+-----------+
+| country_id | country_name | region_id |
++------------+--------------+-----------+
+|       2001 | jermany      |      1001 |
+|       2002 | Mexico       |      1002 |
+|       2003 | Russia       |      1003 |
+|       2004 | Nigeria      |      1004 |
+|       2005 | India        |      1005 |
+|       2006 | France       |      1006 |
+|       2007 | New zealand  |      1007 |
++------------+--------------+-----------+
+7 rows in set (0.00 sec)
+
+mysql> insert in to locations values(1100,'zeli',84210,'Berlin','Hamburg',2001),(1200,'Madero street',70008,'Tijuana','Chiapas', 2002),(1300,'Sovetskaya',68215,'Moscow','st peterburg',2003),(1400,'Toyin street',45681,'Lagos','Imo state',2004),(1500,'Chandni chowk',22389,'Delhi','Delhi',2005),(1600,'Champs Elysees',18998,'Paris','Corsica',2006),(1700,'Queen street',21456,'Hamilton','Auckland',2007);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'in to locations values(1100,'zeli',84210,'Berlin','Hamburg',2001),(1200,'Madero ' at line 1
+mysql> insert in to locations values(1100,'zeli',84210,'Berlin','Hamburg',2001),(1200,'Madero street',70008,'Tijuana','Chiapas', 2002),(1300,'Sovetskaya',68215,'Moscow','st peterburg',2003),(1400,'Toyin street',45681,'Lagos','Imo state',2004),(1500,'Chandni chowk',22389,'Delhi','Delhi',2005),(1600,'Champs Elysees',18998,'Paris','Corsica',2006),(1700,'Queen street',21456,'Hamilton','Auckland',2007);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'in to locations values(1100,'zeli',84210,'Berlin','Hamburg',2001),(1200,'Madero ' at line 1
+mysql> insert into locations values(1100,'zeli',84210,'Berlin','Hamburg',2001),(1200,'Madero street',70008,'Tijuana','Chiapas', 2002),(1300,'Sovetskaya',68215,'Moscow','st peterburg',2003),(1400,'Toyin street',45681,'Lagos','Imo state',2004),(1500,'Chandni chowk',22389,'Delhi','Delhi',2005),(1600,'Champs Elysees',18998,'Paris','Corsica',2006),(1700,'Queen street',21456,'Hamilton','Auckland',2007);
+Query OK, 7 rows affected (0.03 sec)
+Records: 7  Duplicates: 0  Warnings: 0
+
+mysql> select*from locations;
++-------------+----------------+-------------+----------+----------------+------------+
+| location_id | street_address | postal_code | city     | state_province | country_id |
++-------------+----------------+-------------+----------+----------------+------------+
+|        1100 | zeli           | 84210       | Berlin   | Hamburg        |       2001 |
+|        1200 | Madero street  | 70008       | Tijuana  | Chiapas        |       2002 |
+|        1300 | Sovetskaya     | 68215       | Moscow   | st peterburg   |       2003 |
+|        1400 | Toyin street   | 45681       | Lagos    | Imo state      |       2004 |
+|        1500 | Chandni chowk  | 22389       | Delhi    | Delhi          |       2005 |
+|        1600 | Champs Elysees | 18998       | Paris    | Corsica        |       2006 |
+|        1700 | Queen street   | 21456       | Hamilton | Auckland       |       2007 |
++-------------+----------------+-------------+----------+----------------+------------+
+7 rows in set (0.00 sec)
+
+mysql> insert into  departments values(1,'Finance',1100),(2,'Management',1200),(3,'Quality assurance',1300),(4,'Accounting',1400),(5,'Marketing',1500),(6,'Engineering',1600),(7,'Law',1700);
+Query OK, 7 rows affected (0.03 sec)
+Records: 7  Duplicates: 0  Warnings: 0
+
+mysql> select*from  departments;
++---------------+-------------------+-------------+
+| department_id | department_name   | location_id |
++---------------+-------------------+-------------+
+|             1 | Finance           |        1100 |
+|             2 | Management        |        1200 |
+|             3 | Quality assurance |        1300 |
+|             4 | Accounting        |        1400 |
+|             5 | Marketing         |        1500 |
+|             6 | Engineering       |        1600 |
+|             7 | Law               |        1700 |
++---------------+-------------------+-------------+
+7 rows in set (0.00 sec)
+
+mysql> insert into jobs values(10,'Loan officer',15000,20000),(20,'Data entry',5000,8000),(30,'Quality Assurance Engineer',30000,65000),(40,'Senior Accountant',28000,45000),(50,'Digital marketing mnanager',35000,69000),(60,'Civil Engineer',30000,70000),(70,'Advocate',90000,100000);
+ERROR 1406 (22001): Data too long for column 'job_title' at row 3
+mysql> desc jobs;
++------------+-------------+------+-----+---------+----------------+
+| Field      | Type        | Null | Key | Default | Extra          |
++------------+-------------+------+-----+---------+----------------+
+| job_id     | int(11)     | NO   | PRI | NULL    | auto_increment |
+| job_title  | varchar(20) | YES  |     | NULL    |                |
+| min_salary | int(11)     | YES  |     | NULL    |                |
+| max_salary | int(11)     | YES  |     | NULL    |                |
++------------+-------------+------+-----+---------+----------------+
+4 rows in set (0.01 sec)
+
+mysql> insert into jobs values(10,'Loan officer',15000,20000),(20,'Data entry',5000,8000),(30,'Quality Engineer',30000,65000),(40,'Senior Accountant',28000,45000),(50,'Digital marketing mnanager',35000,69000),(60,'Civil Engineer',30000,70000),(70,'Advocate',90000,100000);
+ERROR 1406 (22001): Data too long for column 'job_title' at row 5
+mysql> insert into jobs values(10,'Loan officer',15000,20000),(20,'Data entry',5000,8000),(30,'Quality Engineer',30000,65000),(40,'Senior Accountant',28000,45000),(50,'Marketing manager',35000,69000),(60,'Civil Engineer',30000,70000),(70,'Advocate',90000,10
+Query OK, 7 rows affected (0.03 sec)
+Records: 7  Duplicates: 0  Warnings: 0
+
+mysql> select*from jobs;
++--------+-------------------+------------+------------+
+| job_id | job_title         | min_salary | max_salary |
++--------+-------------------+------------+------------+
+|     10 | Loan officer      |      15000 |      20000 |
+|     20 | Data entry        |       5000 |       8000 |
+|     30 | Quality Engineer  |      30000 |      65000 |
+|     40 | Senior Accountant |      28000 |      45000 |
+|     50 | Marketing manager |      35000 |      69000 |
+|     60 | Civil Engineer    |      30000 |      70000 |
+|     70 | Advocate          |      90000 |     100000 |
++--------+-------------------+------------+------------+
+7 rows in set (0.00 sec)
